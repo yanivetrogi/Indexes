@@ -31,6 +31,7 @@ INNER JOIN sys.dm_db_missing_index_group_stats s ON g.index_group_handle = s.gro
 INNER JOIN sys.tables t ON t.object_id = d.[object_id]
 WHERE 1=1
 AND OBJECTPROPERTY(d.[object_id], 'IsMsShipped') = 0
+AND t.is_memory_optimized <> 1 
 AND d.database_id = DB_ID()
 --AND OBJECT_NAME(d.object_id) NOT IN ( '','','','','','','','','','','','','','','','','','','','','','','','')
 --AND OBJECT_NAME(d.object_id) LIKE ''
