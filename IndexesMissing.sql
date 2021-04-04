@@ -1,4 +1,4 @@
-USE StackOverflow2010
+USE trumotDB
 SET NOCOUNT ON; SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 --SELECT DATEDIFF(DAY, create_date, CURRENT_TIMESTAMP)dif_dd, create_date FROM sys.databases WHERE database_id = 2
 
@@ -31,16 +31,16 @@ INNER JOIN sys.dm_db_missing_index_group_stats s ON g.index_group_handle = s.gro
 INNER JOIN sys.tables t ON t.object_id = d.[object_id]
 WHERE 1=1
 AND OBJECTPROPERTY(d.[object_id], 'IsMsShipped') = 0
-AND t.is_memory_optimized <> 1 
+--AND t.is_memory_optimized <> 1 
 AND d.database_id = DB_ID()
 --AND OBJECT_NAME(d.object_id) NOT IN ( '','','','','','','','','','','','','','','','','','','','','','','','')
---AND OBJECT_NAME(d.object_id) LIKE ''
+AND OBJECT_NAME(d.object_id) LIKE 'ASK_TO_PAY_P_TBL'
 --AND avg_user_impact > 50
 ORDER BY s.avg_total_user_cost * s.avg_user_impact * (s.user_seeks + s.user_scans) DESC;
 
---EXEC sp_helpindex2 @Table = '', @Schema = 'dbo', @IndexExtendedInfo = 0, @MissingIndexesInfo = 1, @ColumnsInfo = 1
+--select OBJECT_NAME(object_id), * from sys.sql_modules where definition like '%IX_ASK_TO_PAY_P_TBL_COID%'
 
+--EXEC sp_helpindex2 @Table = 'ASK_TO_PAY_P_TBL', @Schema = 'dbo', @IndexExtendedInfo = 0, @MissingIndexesInfo = 1, @ColumnsInfo = 1
 
-
+drop index IX_ASK_TO_PAY_P_TBL_COID on ASK_TO_PAY_P_TBL
 	
-
